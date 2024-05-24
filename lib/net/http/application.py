@@ -21,6 +21,9 @@ def post(*, url):
 
 
 class Application:
+  def __init__(self):
+    pass
+
   def listen(_, *, port, hostname):
     print(routes)
     

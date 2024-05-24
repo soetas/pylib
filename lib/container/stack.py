@@ -28,3 +28,13 @@ class Stack:
   
   def __iter__(self):
     return StackIterator(self.items)
+
+  def __len__(self):
+    return len(self.items)
+  
+  def __getitem__(self, pos):
+    return self.items[pos]
+  
+  def __contains__(self, item):
+    return item in self.items
+  
