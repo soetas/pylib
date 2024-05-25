@@ -21,12 +21,44 @@ def post(*, url):
   return inner  
 
 
+class readonly:
+  def __init__(self):
+    self.value = None
+
+  def __get__(self, instance, owner):
+    pass
+
+  def __set__(self, instance, value):
+    pass
+
+  def __delete__(self, instance):
+    pass
+
+class validate:
+  def __init__(self, *, type, max, min, max_length, min_length):
+    self.type = type
+    self.value = None
+
+  def __get__(self, instance, owner):
+    pass
+
+  def __set__(self, instance, value):
+    if isinstance(value, self.type):
+      pass
+    else:
+      raise TypeError()
+
+  def __delete__(self, instance):
+    pass
+
+
 class Application:
   """
   
   """
   __slots__ = ('baseURL')
-  version = '0.0.1'
+
+  version = validate(type=str, max_length=10)
 
   def __init__(self, *, baseURL):
     super().__init__()
@@ -46,6 +78,9 @@ class Application:
 
   def __getattribute__(self, name):
     return object.__getattribute__(self, name)
+
+  def __getattr__(self, name):
+    pass
 
   @property
   def info(self):

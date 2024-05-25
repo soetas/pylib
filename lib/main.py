@@ -21,4 +21,7 @@ if __name__ == '__main__':
   print(Stack.__dict__)
 
   print(app.info)
- 
+
+  # metaclass
+  print(type('User', (), {}))
+
