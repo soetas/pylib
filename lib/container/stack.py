@@ -1,5 +1,6 @@
 class StackIterator:
-  index = 0
+  def __init__(self):
+    self.index = 0
 
   def __init__(self, items):
     self.items = items
@@ -16,25 +17,30 @@ class StackIterator:
       self.index = 0
       raise StopIteration
 
-
 class Stack:
-  items = []
+  def __init__(self):
+    self.__items = []
 
   def push(self, item):
-    self.items.append(item)
+    self.__items.append(item)
 
   def pop(self):
-    return self.items.pop()
+    return self.__items.pop()
   
   def __iter__(self):
-    return StackIterator(self.items)
+    return StackIterator(self.__items)
 
   def __len__(self):
-    return len(self.items)
+    return len(self.__items)
   
   def __getitem__(self, pos):
-    return self.items[pos]
+    return self.__items[pos]
+  
+  def __setitem__(self, pos, value):
+    self.__items[pos] = value
+
+  def __delitem__(self, pos):
+    del self.__items[pos]
   
   def __contains__(self, item):
-    return item in self.items
-  
+    return item in self.__items

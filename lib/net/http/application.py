@@ -1,4 +1,5 @@
 from http.server import HTTPServer
+from typing import Any
 
 routes = {
   "get":[],
@@ -21,8 +22,15 @@ def post(*, url):
 
 
 class Application:
-  def __init__(self):
-    pass
+  """
+  
+  """
+  __slots__ = ('baseURL')
+  version = '0.0.1'
+
+  def __init__(self, *, baseURL):
+    super().__init__()
+    self.baseURL = baseURL
 
   def listen(_, *, port, hostname):
     print(routes)
@@ -33,3 +41,20 @@ class Application:
   def __str__(self):
     pass
 
+  def __del__(self):
+    pass
+
+  def __getattribute__(self, name):
+    return object.__getattribute__(self, name)
+
+  @property
+  def info(self):
+    return { 'version':'0.0.1', 'status':'run' }
+  
+  @info.setter
+  def info(self, value):
+    pass
+
+  @info.deleter
+  def info(self):
+    pass
