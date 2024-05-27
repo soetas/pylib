@@ -56,9 +56,8 @@ class Application:
   """
   
   """
+  # 自省机制
   __slots__ = ('baseURL')
-
-  version = validate(type=str, max_length=10)
 
   def __init__(self, *, baseURL):
     super().__init__()
@@ -93,3 +92,8 @@ class Application:
   @info.deleter
   def info(self):
     pass
+
+  @staticmethod
+  def getInstance():
+    return Application()
+  

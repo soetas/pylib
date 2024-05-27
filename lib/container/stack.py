@@ -44,3 +44,6 @@ class Stack:
   
   def __contains__(self, item):
     return item in self.__items
+
+  def __reverse__(self):
+    pass

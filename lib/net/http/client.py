@@ -1,3 +1,5 @@
+import requests
+
 class HTTPClient:
   @staticmethod
   def request():
