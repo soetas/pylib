@@ -1,18 +1,27 @@
+"""
+@author soetas
+@file main.py
+@since 2024/05/28 9:10
+"""
 import threading
-from collections.abc import Iterable, Iterator, Sized, Sequence, MutableSequence
+import copy
+from collections.abc import Iterable, Iterator, Sized, Sequence, MutableSequence, \
+  Mapping, MutableMapping
 from abc import ABC, abstractmethod
 from random import choice
 from timeit import repeat
 from sys import getsizeof
 from gettext import gettext
 from functools import reduce
-from container import Stack, Queue
+from container import Stack, Queue, array
 from net.http import Application, get, post, HTTPClient
 from builtin import timer
 
 # dynamically bind custom object methods
 from types import MethodType 
 from contextlib import contextmanager
+from bisect import bisect, insort
+from collections import UserDict
 
 def typeof(value):
   return type(value).__name__
@@ -81,34 +90,67 @@ class Cheerio:
     pass
 
 @contextmanager
-def parse():
+def read_file():
+  print('enter ~~~')
+  yield 0
+  print('exit ~~~')
+
+class Map(UserDict):
   pass
 
 
+def fibonacci(n):
+  pass
+
 
 if __name__ == '__main__':
-  mul = lambda x,y: x*y
+  print(list(range(0, 10, 2))[::-1])
+  print(array('d', [81, 67, 10, 55, 28]))
 
-  print(id(mul), type(mul), type(type(mul)))
-  print(type(Application), typeof(0))  
+  square = lambda x: x**2
 
-  count = num(-0.8)
+  print([square(x) for x in range(1, 10) if x%2 == 0])
+  print(next(filter(lambda x: x>0, (-5, 7, -1, 9))))
+  print(dir(dict))
+  help(dict.fromkeys)
 
-  print(type(count), count, abs(count))
-  print(num.__bases__)
-  print(type(num), type(type), type(None), None == None)
-  print(repr(count), bool(num(0)))
+  user = {
+    'account':'Jeanette Bishop',
+    'passwd':'2d1c2641-4ebe-53da-be10-53527bb3b434',
+    'email':'bo@ridha.ch'
+  }
 
-  mongodb = Mongodb()
+  for key, value in user.items():
+    print(f'{key} => {value}')
 
-  print(isinstance(mongodb, Database), type(mongodb) is Database)
-  print(issubclass(Mongodb, Database))
+  print(set('hello,world'))
+  print(dir(set))
 
-  print(Application.__mro__)
+  print(isinstance((x for x in range(10)), Iterator))
 
-  HTTPClient.request()
+  users = [
+    {'name':'Tom Smith', 'email':'foemlu@jut.ec', 'points':7},
+    {'name':'Elmer Banks', 'email':'vuewe@ig.ph', 'points':18},
+    {'name':'Bernard West', 'email':'kivudut@vejse.il', 'points':4},
+    {'name':'Bettie Nash', 'email':'hi@gih.ht', 'points':21},
+    {'name':'Katharine Gilbert', 'email':'tool@genuza.li', 'points':10},
+  ]
 
-  with Cheerio('') as cheerio:
-    print(cheerio)
+  vip_users = (user for user in users if user['points'] >= 10)
 
+  print(vip_users, type(vip_users))
+  
+  for user in vip_users:
+    print(user)
 
+  try:
+    print(next(vip_users))
+  except StopIteration as e:
+    print(e)
+  else:
+    pass
+  finally:
+    pass
+
+  with read_file() as obj:
+    pass
