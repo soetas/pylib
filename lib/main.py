@@ -26,7 +26,6 @@ from collections import UserDict
 def typeof(value):
   return type(value).__name__
 
-
 @get(url='/')
 def index():
   pass
@@ -102,55 +101,33 @@ class Map(UserDict):
 def fibonacci(n):
   pass
 
+class computed:
+  def __init__(self, *, type):
+    self.type = type
+
+  def __get__(self, instance, owner):
+    return self
+  
+  def __set__(self, instance, value):
+    pass
+
+  def __delete__(self, instance):
+    pass
+
+class Component:
+  display_name = computed(type=str)
+
+  def __getattr__(self, name):
+    pass
+
+  def __getattribute__(self, name):
+    return super().__getattribute__(name)
+
 
 if __name__ == '__main__':
-  print(list(range(0, 10, 2))[::-1])
-  print(array('d', [81, 67, 10, 55, 28]))
+  button = Component()
 
-  square = lambda x: x**2
+  button.display_name = 'el_button'
 
-  print([square(x) for x in range(1, 10) if x%2 == 0])
-  print(next(filter(lambda x: x>0, (-5, 7, -1, 9))))
-  print(dir(dict))
-  help(dict.fromkeys)
+  print(type(button.display_name))
 
-  user = {
-    'account':'Jeanette Bishop',
-    'passwd':'2d1c2641-4ebe-53da-be10-53527bb3b434',
-    'email':'bo@ridha.ch'
-  }
-
-  for key, value in user.items():
-    print(f'{key} => {value}')
-
-  print(set('hello,world'))
-  print(dir(set))
-
-  print(isinstance((x for x in range(10)), Iterator))
-
-  users = [
-    {'name':'Tom Smith', 'email':'foemlu@jut.ec', 'points':7},
-    {'name':'Elmer Banks', 'email':'vuewe@ig.ph', 'points':18},
-    {'name':'Bernard West', 'email':'kivudut@vejse.il', 'points':4},
-    {'name':'Bettie Nash', 'email':'hi@gih.ht', 'points':21},
-    {'name':'Katharine Gilbert', 'email':'tool@genuza.li', 'points':10},
-  ]
-
-  vip_users = (user for user in users if user['points'] >= 10)
-
-  print(vip_users, type(vip_users))
-  
-  for user in vip_users:
-    print(user)
-
-  try:
-    print(next(vip_users))
-  except StopIteration as e:
-    print(e)
-  else:
-    pass
-  finally:
-    pass
-
-  with read_file() as obj:
-    pass
