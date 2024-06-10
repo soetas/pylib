@@ -1,0 +1,8 @@
+POST  http://localhost:5713/api/users HTTP/1.1
+Content-Type: application/application/x-www-form-urlencoded
+
+username=Lucille Walker&email=kos@ginulnek.tt
+
+
+GET http://localhost:5713 HTTP/1.1
+
