@@ -1,63 +1,109 @@
-class App:
-  def __init__(self, name, mark):
-    self.__name = name
-    self.mark = mark
+import sys
+from typing import List
+from logging import warning, exception, basicConfig, INFO, getLogger
 
-  @property
-  def mark(self):
-    return self.__mark
+basicConfig(level=INFO)
 
-  @mark.setter
-  def mark(self, value):
-    if not 0 <= value <= 5:
-      raise ValueError('')
-    
-    self.__mark = value
+log = getLogger()
 
-  def __del__(self):
+class HTTPClient:
+  __instance = None
+  __version = '1.1'
+
+  def get():
+    pass
+  
+  def post():
     pass
 
-  def __str__(self):
-    return f'App{{name:{self.__name}, mark:{self.__mark}}}'
-
-  def __repr__(self):
-    return f'<{__name__}.{type(self).__name__} object at 0x00000{hex(id(self))[2:].upper()}>'
-
-  def install(self):
+  @staticmethod
+  def request():
     pass
 
-  def upgrade(self):
-    pass
+  @classmethod
+  def create(cls, *, baseURL, timeout):
+    if cls.__instance == None:
+      cls.__instance = cls()
+    return cls.__instance
 
-  def uninstall(self):
-    del self
+class Math:
+  Pi = 3.1415926
 
-class Software:
-  def run(self):
-    pass
+  @staticmethod
+  def pow(x, y):
+    if not (isinstance(x, (int, float)) and isinstance(y, (int, float))):
+      raise TypeError
+    return x ** y
 
-class SocialApp(App, Software):
-  def __init__(self, name, mark, version):
-    super().__init__(name, mark)
+class GarbageCollector:
+  __instance = None
+
+  def __new__(cls, *args, **kwargs):
+    if cls.__instance is None:
+      cls.__instance = super().__new__(cls)
+    return cls.__instance
+
+  def __init__(self, status, *, version):
+    self.status = status
     self.version = version
 
-  def __str__(self):
-    desc = super().__str__()
-    return f'{desc[:len(desc)-1]}, version:{self.version}}}'
+class Rune:
+  @staticmethod
+  def __normalize(value):
+    if isinstance(value, Rune):
+      return value.code
+    elif isinstance(value, str):
+      return ord(value)
+    elif isinstance(value, int):
+      return value
+    else:
+      raise TypeError('')
 
+  def __init__(self, value):
+    self.code = value if isinstance(value, int) else ord(value)
+
+  def __add__(self, other):
+    return Rune(self.code + other)
+
+  def __sub__(self, other):
+    return Rune(self.code - other)
+
+  def __cmp__(self, other):
+    if self.code > other.code:
+      return 1
+    elif self.code < other.code:
+      return -1
+    else:
+      return 0
+
+  def __lt__(self, other):
+    return self.code < other.code
+
+  def __str__(self):
+    return f'Rune({chr(self.code)})'
+
+  def __repr__(self):
+    return f'{chr(self.code)}'
+
+class OverflowError(Exception):
+  def __init__(self):
+    super().__init__()
+  
+  def __str__(self):
+    return f'overflow'
+  
 
 if __name__ == '__main__':
-  account = 'Lou Hopkins' or input('account: ')
-  email = 'dungok@az.hm' or input('email: ')
+  try:
+    raise OverflowError()
+  except OverflowError as ex:
+    print(ex)
 
-  post = dict(uid=0, id=0, title='', body='')
+  try:
+    with open('request.http', 'r+') as f:
+      print(f.readlines())
+  except (FileNotFoundError, Exception):
+    pass
 
-  print(f'<{account}, {email}>', post)
+  print(FileNotFoundError.mro())
 
-  app = SocialApp('wechat', 4.1, '1.16.2')
-
-  print(app, SocialApp.mro())
-  print(isinstance(app, App))
-
-
-  
