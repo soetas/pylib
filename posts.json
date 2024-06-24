@@ -1,0 +1,12 @@
+{
+  "uid": 0,
+  "id": 0,
+  "author": null,
+  "title": "learn vue",
+  "body": "vue is front-end progressive framework",
+  "tags": [
+    "vue",
+    "frontend",
+    "framework"
+  ]
+}
