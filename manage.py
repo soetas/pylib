@@ -4,7 +4,6 @@ from werkzeug.routing import BaseConverter
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
 
-
 class PathConverter(BaseConverter):
   """custom converter """
   def __init__(self, *args):

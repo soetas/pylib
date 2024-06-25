@@ -1,62 +1,22 @@
-import time
-import pytz
-import json
-from os import getenv, environ, pathsep, linesep, stat
-from os.path import abspath, isabs, getatime, getsize
-from collections import namedtuple
-from datetime import timedelta
-from random import sample
-from string import digits, ascii_lowercase
+import fmt
 from stdlib import *
-
-
-User = namedtuple('User', ('name', 'email', 'birth'))
+from random import seed, randrange, uniform, choices, shuffle
 
 if __name__ == '__main__':
-  print(cwd, is_dir('..'))
-  print(abspath(__file__), getenv('GOPROXY'))
-
-  exec('ls .')
-
-  print(now())
-
-  user = User(name='', email='', birth=time.strptime('1997/02/22', '%Y/%m/%d'))
-
-  print(user.birth)
-  print(today)
-  print([timezone for timezone in pytz.all_timezones if timezone.startswith('Asia')])
-  
-  print(rand_color())
-
-  char_list = list(ascii_lowercase)+list(digits)
-
-  print(''.join(sample(char_list, 4)))
-
-  post = dict(
-    uid=0, 
-    id=0, 
-    author=None,
-    title='learn vue', 
-    body='vue is front-end progressive framework', 
-    tags=['vue', 'frontend', 'framework']
+  user = dict(
+    account='Theresa Nguyen',
+    passwd='123456+',
+    token='a57607a2d15d56f59ef3120b8f71b5db'
   )
 
-  print(pickle.dumps(post))
-  print(json.dumps(post).encode('utf8'))
+  print(encrypt(user))
+  print(encrypt(user, 'sha1'))
+  print(encrypt(user, 'sha256'))
 
-  with open('posts.json', 'w+') as f:
-    json.dump(post, f, indent=2)
+  compress('templates', 'templates')
 
-  # with open('users.txt') as f:
-  #   pickle.dump(user, f)
+  url = 'https://fanyi.youdao.com/#/'
 
-  print(environ.get('GOPATH'), pathsep, stringify(linesep))
-  print(stat('README.md').st_size, isabs('.'))
-  print(time.strftime('%Y:%m:%d %H:%M:%S', time.localtime(getatime('note.md'))))
-  print(getsize('README.md'))
-  
-  exec('cat LICENSE')
-  exec('ipconfig')
+  print(Validator.is_email('15530484731@163.com'), Validator.is_url(url))
 
-
-  
+  fmt.println('hi,python', uniform(60, 100), Random.color())

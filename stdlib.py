@@ -3,12 +3,15 @@ import json
 import pickle
 import os
 import time
+import hashlib
+import re
 from datetime import datetime
 from random import randint
+from shutil import copyfileobj, copymode, copystat, make_archive
+from zipfile import ZipFile
 
 cwd = os.getcwd()
 today = datetime.now()
-
 
 class Command:
   def name(self, name):
@@ -46,15 +49,50 @@ def now():
 
   return f'{year}-{month:02}-{day} {time.strftime("%H:%M:%S", current_time)}'
 
-def rand_color():
-  red = hex(randint(0, 255))[2:]
-  green = hex(randint(0, 255))[2:]
-  blue = hex(randint(0, 255))[2:]
-
-  return f'#{red}{green}{blue}'
-
 def stringify(value):
   if type(value) in (int, str, float, list, tuple, set, dict):
     return json.dumps(value)
   else:
     return pickle.dumps(value)
+
+def encrypt(payload,  algorithm='md5'):
+  payload = pickle.dumps(payload)
+
+  if algorithm == 'md5':
+    return hashlib.md5(payload).hexdigest()
+  elif algorithm == 'sha1':
+    return hashlib.sha1(payload).hexdigest()
+  elif algorithm == 'sha256':
+    return hashlib.sha256(payload).hexdigest()
+
+def copyfile(src, dst):
+  copyfileobj(open(src), open(dst, 'w'))
+
+def compress(name, dirname):
+  with ZipFile(f'{name}.zip', 'w') as zipfile:
+    for name in os.listdir(dirname):
+      zipfile.write(os.path.join(dirname, name))
+
+class Validator:
+  @staticmethod 
+  def is_email(email):
+    return re.match('^\w{5,12}@(qq|163).com$', email) is not None
+  
+  @staticmethod
+  def is_url(url):
+    return re.match('^https?://[a-z]{3,}\.[a-z]{3,}\.(com|org|cn)/.+$', url) is not None
+
+
+class Random:
+  @staticmethod
+  def color():
+    red = hex(randint(0, 255))[2:]
+    green = hex(randint(0, 255))[2:]
+    blue = hex(randint(0, 255))[2:]
+
+    return f'#{red}{green}{blue}'
+
+  @staticmethod 
+  def username():
+    pass
+

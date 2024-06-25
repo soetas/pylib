@@ -10,6 +10,10 @@ pip install -i http://pypi.douban.com/simple/ virtualenv --trusted-host pypi.dou
 
 virtualenv --version
 
+pip install -r requirements
+
+pip freeze > requirements
+
 ```
 
 ```py
