@@ -5,13 +5,14 @@ import os
 import time
 import hashlib
 import re
-from datetime import datetime
+from datetime import datetime, time as datetime_time, timedelta, date
 from random import randint
 from shutil import copyfileobj, copymode, copystat, make_archive
 from zipfile import ZipFile
+from logging import debug, info, warn, error, critical, basicConfig, DEBUG, INFO, WARN, \
+  Logger, Handler, Filter, Formatter
 
 cwd = os.getcwd()
-today = datetime.now()
 
 class Command:
   def name(self, name):
@@ -82,7 +83,6 @@ class Validator:
   def is_url(url):
     return re.match('^https?://[a-z]{3,}\.[a-z]{3,}\.(com|org|cn)/.+$', url) is not None
 
-
 class Random:
   @staticmethod
   def color():
@@ -95,4 +95,69 @@ class Random:
   @staticmethod 
   def username():
     pass
+
+
+def settimeout(callback, seconds):
+  time.sleep(seconds)
+  callback()
+
+class JSON:
+  @staticmethod
+  def parse(s_or_fp):
+    if type(s_or_fp) is str:
+      return json.loads(s_or_fp)
+    return json.load(s_or_fp)
+
+  @staticmethod
+  def stringify(obj, fp=None):
+    if fp is None:
+      return json.dumps(obj, indent=2, sort_keys=True)
+    json.dump(obj, fp)
+
+
+class Date:
+  def __init__(self, *, year, month, day, hour, minute, second):
+    self.date = date(year, month, day)
+    self.time = datetime_time(hour, minute, second)
+
+  @staticmethod
+  def now():
+    return time.time()
+  
+  def __str__(self):
+    return f''
+
+  def get_year(self):
+    pass
+
+  def get_month(self):
+    pass
+
+  def get_day(self):
+    pass
+
+  def get_time(self):
+    pass
+
+class Logger:
+  def __init__(self, *, level='warn', filename=None):
+    level_dict = dict(debug=DEBUG, info=INFO, warn=WARN)
+    format = '[%(levelname)s] %(asctime)s %(filename)s: %(message)s'
+
+    basicConfig(level=level_dict[level], filename=filename, format=format)
+
+  def debug(self, msg):
+    debug(msg)
+
+  def info(self, msg):
+    info(msg)
+
+  def warn(self, msg):
+    warn(msg)
+
+  def error(self, msg):
+    error(msg)
+
+  def critical(self, msg):
+    critical(msg)
 
